@@ -328,6 +328,19 @@ public class VendingMachineTest {
 		assertTrue(result);
 	}
 
+	@Test
+	public void testMakePurchase_5()
+		throws Exception {
+		VendingMachine vendingMachine = new VendingMachine();
+		VendingMachineItem item = new VendingMachineItem("", 1.0);
+		String code = "A";
+		vendingMachine.setBalance(1.0);
+		
+		vendingMachine.addItem(item, code);
+		boolean result = vendingMachine.makePurchase(code);
+		assertEquals(true, result);
+	}
+
 	/**
 	 * Run the VendingMachineItem removeItem(String) method test.
 	 *
@@ -385,6 +398,17 @@ public class VendingMachineTest {
 		VendingMachineItem result = fixture.removeItem(code);
 
 		// add additional test code here
+		assertNotNull(result);
+	}
+
+	@Test
+	public void testRemoveItem_4()
+		throws Exception {
+		VendingMachine vendingMachine = new VendingMachine();
+		VendingMachineItem item = new VendingMachineItem("", 1.0);
+		String code = "A";
+		vendingMachine.addItem(item, code);
+		VendingMachineItem result = vendingMachine.removeItem(code);
 		assertNotNull(result);
 	}
 
