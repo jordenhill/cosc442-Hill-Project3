@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>VendingMachineTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">edu.towson.cis.cosc442.project3.vendingmachine.tests (Mar 16, 2016 2:34:11 PM)</a> &gt; <a href="../../index.html" class="el_group">VendingMachine2</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">edu.towson.cis.cosc442.project3.vendingmachine.tests</a> &gt; <span class="el_source">VendingMachineTest.java</span></div><h1>VendingMachineTest.java</h1><pre class="source lang-java linenums">/**
+ * 
+ */
+package edu.towson.cis.cosc442.project3.vendingmachine.tests;
+
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import edu.towson.cis.cosc442.project3.vendingmachine.*;
+
+/**
+ * @author Jorden
+ *
+ */
+<span class="fc" id="L18">public class VendingMachineTest {</span>
+
+	VendingMachine vendingMachine;
+<span class="fc" id="L21">	VendingMachineItem item1 = new VendingMachineItem(&quot;Pepsi&quot;, 1.50);</span>
+<span class="fc" id="L22">	VendingMachineItem item2 = new VendingMachineItem(&quot;Mountain Dew&quot;, 1.50);</span>
+<span class="fc" id="L23">	VendingMachineItem item3 = new VendingMachineItem(&quot;Aquafina&quot;, 1.50);</span>
+<span class="fc" id="L24">	VendingMachineItem item4 = new VendingMachineItem(&quot;Brisk&quot;, 1.50);</span>
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+<span class="fc" id="L31">		vendingMachine = new VendingMachine();</span>
+<span class="fc" id="L32">	}</span>
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
+<span class="fc" id="L39">	}</span>
+
+	/**
+	 * Test to see if an item can be added successfully to all slots. 
+	 */
+	@Test
+	public final void testAddItem() {
+<span class="fc" id="L46">		assertTrue(&quot;Failed to add Pepsi&quot;, vendingMachine.addItem(item1, &quot;A&quot;));</span>
+<span class="fc" id="L47">		assertTrue(&quot;Failed to add Mountain Dew&quot;, vendingMachine.addItem(item2, &quot;B&quot;));</span>
+<span class="fc" id="L48">		assertTrue(&quot;Failed to add Aquafina&quot;, vendingMachine.addItem(item3, &quot;C&quot;));</span>
+<span class="fc" id="L49">		assertTrue(&quot;Failed to add Brisk&quot;, vendingMachine.addItem(item4, &quot;D&quot;));</span>
+<span class="fc" id="L50">	}</span>
+	
+	/**
+	 * Test to see if an item cannot be be added to an already occupied slot.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public final void testAddItemToOccupiedSlot() {
+<span class="fc" id="L57">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="nc" id="L58">		vendingMachine.addItem(item2, &quot;A&quot;);</span>
+<span class="nc" id="L59">	}</span>
+
+	/**
+	 * Test to see if an item cannot be added to a slot that doesn't exist.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public final void testAddItemWithIncorrectCode() {
+<span class="nc" id="L66">		vendingMachine.addItem(item1, &quot;E&quot;);</span>
+<span class="nc" id="L67">	}</span>
+	
+	/**
+	 * Test to see if items can be successfully removed from all slots.
+	 */
+	@Test
+	public final void testRemoveItem() {
+<span class="fc" id="L74">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L75">		vendingMachine.addItem(item2, &quot;B&quot;);</span>
+<span class="fc" id="L76">		vendingMachine.addItem(item3, &quot;C&quot;);</span>
+<span class="fc" id="L77">		vendingMachine.addItem(item4, &quot;D&quot;);</span>
+<span class="fc" id="L78">		assertNotNull(&quot;Failed to remove Pepsi&quot;, vendingMachine.removeItem(&quot;A&quot;));</span>
+<span class="fc" id="L79">		assertNotNull(&quot;Failed to remove Mountain Dew&quot;, vendingMachine.removeItem(&quot;B&quot;));</span>
+<span class="fc" id="L80">		assertNotNull(&quot;Failed to remove Aquafina&quot;, vendingMachine.removeItem(&quot;C&quot;));</span>
+<span class="fc" id="L81">		assertNotNull(&quot;Failed to remove Brisk&quot;, vendingMachine.removeItem(&quot;D&quot;));</span>
+<span class="fc" id="L82">	}</span>
+
+	/**
+	 * Test to see if an item cannot be removed from a slot that doesn't exist.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public final void testRemoveItemWithIncorrectCode() {
+<span class="fc" id="L89">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L90">		vendingMachine.addItem(item2, &quot;B&quot;);</span>
+<span class="fc" id="L91">		vendingMachine.addItem(item3, &quot;C&quot;);</span>
+<span class="fc" id="L92">		vendingMachine.addItem(item4, &quot;D&quot;);</span>
+<span class="nc" id="L93">		vendingMachine.removeItem(&quot;E&quot;);</span>
+<span class="nc" id="L94">	}</span>
+	
+	/**
+	 * Test to see if an item cannot be removed from a slot that has nothing assigned to it.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public final void testRemoveItemFromUnassignedSlot() {
+<span class="fc" id="L101">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L102">		vendingMachine.addItem(item2, &quot;B&quot;);</span>
+<span class="fc" id="L103">		vendingMachine.addItem(item3, &quot;C&quot;);</span>
+<span class="nc" id="L104">		vendingMachine.removeItem(&quot;D&quot;);</span>
+<span class="nc" id="L105">	}</span>
+	
+	/**
+	 * Test to see if an item can be removed twice
+	 */
+	@Test (expected = VendingMachineException.class)
+	public final void testRemoveItemTwice() {
+<span class="fc" id="L112">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L113">		vendingMachine.removeItem(&quot;A&quot;);</span>
+<span class="nc" id="L114">		vendingMachine.removeItem(&quot;A&quot;);</span>
+<span class="nc" id="L115">	}</span>
+	
+	
+	/**
+	 * Test to see if money can be inserted into the vending machine.
+	 */
+	@Test
+	public final void testInsertMoney() {
+<span class="fc" id="L123">		assertTrue(&quot;Failed to add money to balance&quot;, vendingMachine.insertMoney(2.0));</span>
+<span class="fc" id="L124">	}</span>
+
+	/**
+	 * Test to see if a negative amount of money cannot be inserted into the vending machine.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public final void testInsertNegativeAmountOfMoney() {
+<span class="nc" id="L131">		vendingMachine.insertMoney(-2.0);</span>
+<span class="nc" id="L132">	}</span>
+	
+	/**
+	 * Test to see if the balance is what it should be after inserting money.
+	 */
+	@Test
+	public final void testProperBalanceAfterInsertMoney() {
+<span class="fc" id="L139">		double initialBalance = vendingMachine.getBalance();</span>
+<span class="fc" id="L140">		vendingMachine.insertMoney(3.0);</span>
+<span class="fc" id="L141">		assertEquals(&quot;Got incorrect balance&quot;, initialBalance + 3.0, vendingMachine.getBalance(), 0.01);</span>
+<span class="fc" id="L142">	}</span>
+	
+	/**
+	 * Test to see if getBalance() works as intended.
+	 */
+	@Test
+	public final void testGetBalance() {
+<span class="fc" id="L149">		vendingMachine.insertMoney(5.0);</span>
+<span class="fc" id="L150">		assertEquals(&quot;Got incorrect balance back&quot;, 5.0, vendingMachine.getBalance(), 0.01);</span>
+<span class="fc" id="L151">	}</span>
+
+	/**
+	 * Test to see if a purchase can be made from a slot with an item in it and a sufficient balance.
+	 */
+	@Test
+	public final void testMakePurchase() {
+<span class="fc" id="L158">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L159">		vendingMachine.insertMoney(2.00);</span>
+<span class="fc" id="L160">		assertTrue(&quot;Was not able to make purchase with existent item and sufficient balance&quot;, vendingMachine.makePurchase(&quot;A&quot;));</span>
+<span class="fc" id="L161">	}</span>
+
+	/**
+	 * Test to see if a slot with no item can have something purchased.
+	 */
+	@Test
+	public final void testMakePurchaseWithUnassignedSlot() {
+<span class="fc" id="L168">		assertFalse(&quot;Could purchase item fro unassigned slot&quot;, vendingMachine.makePurchase(&quot;A&quot;));</span>
+<span class="fc" id="L169">	}</span>
+	
+	/**
+	 * Test to see if an item cannot be purchased with an incorrect code.
+	 */
+	@Test (expected = VendingMachineException.class)
+	public final void testMakePurchaseWrongCode() {
+<span class="fc" id="L176">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="nc" id="L177">		vendingMachine.makePurchase(&quot;E&quot;);</span>
+<span class="nc" id="L178">	}</span>
+	
+	/**
+	 * Test to see if a purchase can be made from an unassigned slot but a &quot;sufficient&quot; balance.
+	 */
+	@Test
+	public final void testMakePurchaseNoItem() {
+<span class="fc" id="L185">		vendingMachine.insertMoney(2.00);</span>
+<span class="fc" id="L186">		assertFalse(&quot;Was able to purchase item from unassigned slot.&quot;, vendingMachine.makePurchase(&quot;A&quot;));</span>
+<span class="fc" id="L187">	}</span>
+	
+	/**
+	 * Test to see if a purchase can be made with an item in a slot but no balance.
+	 */
+	@Test
+	public final void testMakePurchaseWithInsufficientBalance() {
+<span class="fc" id="L194">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L195">		assertFalse(&quot;Could purchase item with insufficient balance.&quot;, vendingMachine.makePurchase(&quot;A&quot;));</span>
+<span class="fc" id="L196">	}</span>
+	
+	/**
+	 * Test to see if items can be successfully purchased twice.
+	 */
+	@Test
+	public final void testMakePurchaseTwoItems() {
+<span class="fc" id="L203">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L204">		vendingMachine.addItem(item2, &quot;B&quot;);</span>
+<span class="fc" id="L205">		vendingMachine.insertMoney(3.00);</span>
+<span class="fc" id="L206">		vendingMachine.makePurchase(&quot;A&quot;);</span>
+<span class="fc" id="L207">		assertTrue(&quot;Was unable to purchase subsequent item with enough money&quot;, vendingMachine.makePurchase(&quot;B&quot;));</span>
+<span class="fc" id="L208">	}</span>
+
+	/**
+	 * Test to see if an item can be purchased again after it was already purchased.
+	 */
+	@Test
+	public final void testMakePurchaseSameItem() {
+<span class="fc" id="L215">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L216">		vendingMachine.insertMoney(3.00);</span>
+<span class="fc" id="L217">		vendingMachine.makePurchase(&quot;A&quot;);</span>
+<span class="fc" id="L218">		assertFalse(&quot;Could purchase item even though it was already purchased.&quot;, vendingMachine.makePurchase(&quot;A&quot;));</span>
+<span class="fc" id="L219">	}</span>
+	
+	/**
+	 * Test to see if balance is correct after making a purchase.
+	 */
+	@Test
+	public final void testProperBalanceAfterMakePurchase() {
+<span class="fc" id="L226">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L227">		vendingMachine.insertMoney(2.00);</span>
+<span class="fc" id="L228">		double initialBalance = vendingMachine.getBalance();</span>
+<span class="fc" id="L229">		vendingMachine.makePurchase(&quot;A&quot;);</span>
+<span class="fc" id="L230">		assertEquals(&quot;Got incorrect balance after purchase&quot;, initialBalance - 1.50, vendingMachine.getBalance(), 0.01);</span>
+<span class="fc" id="L231">	}</span>
+
+	/**
+	 * Test returnChange() to see if proper amount of change is returned.
+	 */
+	@Test
+	public final void testReturnChange() {
+<span class="fc" id="L238">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L239">		vendingMachine.insertMoney(2.00);</span>
+<span class="fc" id="L240">		vendingMachine.makePurchase(&quot;A&quot;);</span>
+<span class="fc" id="L241">		assertEquals(&quot;Got incorrect amount of change.&quot;, 0.50, vendingMachine.returnChange(), 0.01);</span>
+<span class="fc" id="L242">	}</span>
+	
+	/**
+	 * Test to see if change if balance is 0 after returning change.
+	 */
+	@Test
+	public final void testBalanceAfterReturnChange() {
+<span class="fc" id="L249">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L250">		vendingMachine.insertMoney(2.00);</span>
+<span class="fc" id="L251">		vendingMachine.makePurchase(&quot;A&quot;);</span>
+<span class="fc" id="L252">		vendingMachine.returnChange();</span>
+<span class="fc" id="L253">		assertEquals(&quot;Vending machine still has balance.&quot;, 0.00, vendingMachine.getBalance(), 0.01);</span>
+<span class="fc" id="L254">	}</span>
+	
+	/**
+	 * Test to see if correct amount of change is returned after adding and using money several times
+	 */
+	@Test
+	public final void testReturnChangeAfterPurchaseInsertCycle() {
+<span class="fc" id="L261">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L262">		vendingMachine.addItem(item2, &quot;B&quot;);</span>
+<span class="fc" id="L263">		vendingMachine.insertMoney(2.00); //2.00</span>
+<span class="fc" id="L264">		vendingMachine.makePurchase(&quot;A&quot;); //0.50</span>
+<span class="fc" id="L265">		vendingMachine.insertMoney(5.00); //5.50</span>
+<span class="fc" id="L266">		vendingMachine.makePurchase(&quot;B&quot;); //4.00</span>
+<span class="fc" id="L267">		assertEquals(&quot;Got incorrect amount of change.&quot;, 4.00, vendingMachine.returnChange(), 0.01);</span>
+<span class="fc" id="L268">	}</span>
+
+	/**
+	 * Test to see if correct amount of change is returned through purchasing and returning change several times.
+	 */
+	@Test
+	public final void testReturnChangeAfterPurchaseReturnCycle() {
+<span class="fc" id="L275">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L276">		vendingMachine.addItem(item2, &quot;B&quot;);</span>
+<span class="fc" id="L277">		vendingMachine.insertMoney(2.00); //2.00</span>
+<span class="fc" id="L278">		vendingMachine.makePurchase(&quot;A&quot;); //0.50</span>
+<span class="fc" id="L279">		vendingMachine.returnChange(); //0.00</span>
+<span class="fc" id="L280">		vendingMachine.insertMoney(2.50); //2.50</span>
+<span class="fc" id="L281">		vendingMachine.makePurchase(&quot;B&quot;); //1.00</span>
+<span class="fc" id="L282">		assertEquals(&quot;Got incorrect amount of change.&quot;, 1.00, vendingMachine.returnChange(), 0.01);</span>
+<span class="fc" id="L283">	}</span>
+	
+	/**
+	 * Test to see if a purchase can be made after returning change.
+	 */
+	@Test
+	public final void testMakePurchaseAfterReturnChange() {
+<span class="fc" id="L290">		vendingMachine.addItem(item1, &quot;A&quot;);</span>
+<span class="fc" id="L291">		vendingMachine.addItem(item2, &quot;B&quot;);</span>
+<span class="fc" id="L292">		vendingMachine.insertMoney(2.00); //2.00</span>
+<span class="fc" id="L293">		vendingMachine.makePurchase(&quot;A&quot;); //0.50</span>
+<span class="fc" id="L294">		vendingMachine.returnChange(); //0.00</span>
+<span class="fc" id="L295">		assertFalse(&quot;Could make purchase after getting change.&quot;, vendingMachine.makePurchase(&quot;B&quot;));</span>
+<span class="fc" id="L296">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>edu.towson.cis.cosc442.project3.vendingmachine.tests (Mar 16, 2016 2:34:11 PM)</div></body></html>
